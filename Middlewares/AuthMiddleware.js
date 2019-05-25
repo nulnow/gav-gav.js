@@ -1,7 +1,7 @@
 class AuthMiddleware {
-    static run(req, res) {
+    static run(app, req, res) {
         return new Promise((resolve, reject) => {
-            if (Math.random() > 0.5) {
+            if (req.input('userId') == 777) {
                 req.user = {
                     name: 'kek'
                 }

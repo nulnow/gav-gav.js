@@ -1,0 +1,25 @@
+{
+  "name": "gav-gav.js",
+  "version": "1.0.0",
+  "description": "express based web framework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nulnow/gav-gav.js.git"
+  },
+  "author": "nulnow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nulnow/gav-gav.js/issues"
+  },
+  "homepage": "https://github.com/nulnow/gav-gav.js#readme",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.0",
+    "mongodb": "^3.2.6"
+  }
+}

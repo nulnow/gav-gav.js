@@ -1,16 +1,33 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+
 const App = require('./App/App');
-const AuthMiddleware = require('./Middlewares/AuthMiddleware');
-const NewsService = require('./Services/NewsService');
-const NewsController = require('./Controllers/NewsController');
 
 const config = require('./config');
-const routes = require('./routes');
 
-const middlewares = [AuthMiddleware];
-const controllers = [NewsController];
-const services = {NewsService};
+const routes = App.LoadRoutes();
+const controllers = App.LoadControllers();
+const middlewares = App.LoadMiddlewares();
+const services = App.LoadServices();
 
-const app = new App({middlewares, services, routes, controllers, config});
+const expressApp = express();
 
-app.run('get', '/news', {});
-app.run('get', '/me', {});
+expressApp.set('views', './resources/views');
+expressApp.set('view engine', 'ejs');
+expressApp.use(bodyParser.json());
+expressApp.use(bodyParser.text());
+expressApp.use(bodyParser.urlencoded({ extended: false }));
+expressApp.use(express.static(__dirname + '/public'));
+
+const app = new App({
+    app: expressApp,
+    middlewares,
+    services,
+    routes,
+    controllers,
+    config
+});
+
+app.app.listen(config.port, () => {
+    console.log(`App is listening on ${config.port} port`);
+});
