@@ -6,6 +6,8 @@ Inspired by Laravel
 - Autoloading for controllers, middlewares and services. You do not need to manuly require them
 - Route generator like in Laravel
 
+[full documentation](https://nulnow.github.io/gav-gav.js/ "Click here")
+
 # Quick start
 
 ## Instalation
