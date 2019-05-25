@@ -1,11 +1,26 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+
 const fs = require('fs');
 const Route = require('./Route');
 
 const Request = require('./Request');
 const Response = require('./Response');
 
+eval(fs.readFileSync('./App/helpers/helpers.js', 'utf8'));
+global.response = response;
+
 class App {
-    constructor({ app, services, routes, controllers, middlewares, config }) {
+    /**
+     * @param {object} config ({ config }) or full configuration object 
+     */
+    constructor(paramObject) {
+        if (!paramObject) return App.GetDefaultSetupWithDefaultConfigs();
+        if (Object.keys(paramObject).length === 1) return App.GetDefaultSetup(paramObject);
+        
+        const { app, services, routes, controllers, middlewares, config } = paramObject;
+        this.port = config.port || process.env.PORT || 3000;
+        this.host = config.host || process.env.HOST || 'localhost';
         this.app = app || null;
         this.paths = {
             get: {},
@@ -16,12 +31,18 @@ class App {
         if (config) {
             this.setUpConfig(config);
         }
+        eval(require('./helpers/helpers'));
         this.bindControllersToRoutes(routes, controllers);
         this.setUp404Page();
     }
+    listen() {
+        this.app.listen(this.port, this.host, () => {
+            console.log(`App is running on http://${this.host}:${this.port}/`);
+        });
+    }
     setUp404Page() {
         this.app.use((req, res) => {
-                (new Response()).code(404).text('Page Not Found!').send(res);
+                new Response().code(404).text('Page Not Found!').send(res);
         });
     }
     setUpConfig(config) {
@@ -44,11 +65,11 @@ class App {
             resolve();
         });
     }
-    async sendResponse(response, res) {
+    sendResponse(response, res) {
         response.send(res);
     }
 
-    async run(method, path, req) {
+    run(method, path, req) {
         this.paths[method][path](req);
     }
 
@@ -112,6 +133,11 @@ class App {
         });
     }
 
+    /**
+     * Requires all files in directory and returns array of loaded data
+     * @param {string} whatToLoad folder name
+     * @returns {array}
+     */
     static Load(whatToLoad) {
         return fs.readdirSync(`./${whatToLoad}/`).reduce(
             (arrayOfWhatToLoad, file) => [
@@ -121,23 +147,86 @@ class App {
         );
     }
 
+    /**
+     * Returns array of all controllers in /Controllers folder
+     * @returns {array}
+     */
     static LoadControllers() {
         return App.Load('Controllers');
     }
 
+    /**
+     * Returns array of all middlewares in /Middlewares folder
+     * @returns {array}
+     */
     static LoadMiddlewares() {
         return App.Load('Middlewares');
     }
 
+    /**
+     * Returns array of all services in /Services folder
+     * @returns {array}
+     */
     static LoadServices() {
         return App.Load('Services');
     }
 
+    /**
+     * Generates array of routes based on /routes/web.js
+     * Array looks like this: [
+     *      {
+     *          path: '/',
+     *          action: 'ControllerClassName@controllerMethod',
+     *          methods: ['get', 'post', ...],
+     *          middlewares: ['AuthMiddleware' ...]
+     *      },
+     *      ...
+     * ]
+     */
     static LoadRoutes() {
         const router = new Route;
         const fileContent = fs.readFileSync('./routes/web.js', 'utf8');
         ((Route) => eval(fileContent))(router);
         return router.flush();
+    }
+
+    static GetDefaultSetup(config) {
+        const routes = App.LoadRoutes();
+        const controllers = App.LoadControllers();
+        const middlewares = App.LoadMiddlewares();
+        const services = App.LoadServices();
+
+        const expressApp = express();
+
+        expressApp.set('views', './resources/views');
+        expressApp.set('view engine', 'ejs');
+        expressApp.use(bodyParser.json());
+        expressApp.use(bodyParser.text());
+        expressApp.use(bodyParser.urlencoded({ extended: false }));
+        expressApp.use(express.static(__dirname + '/public'));
+
+        return new App({
+            app: expressApp,
+            middlewares,
+            services,
+            routes,
+            controllers,
+            config
+        });
+    }
+
+    static GetDefaultSetupWithDefaultConfigs() {
+        return this.GetDefaultSetup(App.DEFAULT_CONFIG);
+    }
+
+    static get DEFAULT_CONFIG () {
+        return {
+            commonMiddlewares: ['AuthMiddleware'],
+            appKey: 'secret',
+            port: process.env.PORT || 3000,
+            host: process.env.HOST || 'localhost',
+            dburl: 'mongodb://localhost:27017/hello'
+        }
     }
 }
 

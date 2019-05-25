@@ -1,7 +1,16 @@
+/**
+ * Generates array of routes
+ */
 module.exports = class Route {
     constructor() {
         this.routes = [];
     }
+    /**
+     * 
+     * @param {array} methods Array of http methods
+     * @param {string} path url path pattern
+     * @param {string} action Controller and method in format 'ControllerName@controllerMethod'
+     */
     route(methods, path, action) {
         const middlewares = this.mws || [];
         this.routes.push({ methods, path, action, middlewares });

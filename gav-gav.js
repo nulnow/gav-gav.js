@@ -1,7 +1,8 @@
 const fs = require('fs');
+const getArg = require('./App/helpers/command-line-args-parser');
 
-function makeController() {
-    const controllerName = process.argv[3];
+function makeController(name) {
+    const controllerName = name || process.argv[3];
     if (!controllerName) {
         console.log('Controller name is required!');
         return;
@@ -17,8 +18,9 @@ module.exports = ${controllerName};`;
     console.log(`Controller ${controllerName} was created!`);
 }
 
-function makeMiddleware() {
-    const middlewareName = process.argv[3];
+function makeMiddleware(name) {
+    const middlewareName = name || process.argv[3];
+    if (!middlewareName)
     if (!middlewareName) {
         console.log('Middleware name is required!');
         return;
@@ -36,18 +38,29 @@ module.exports = ${middlewareName};`;
     console.log(`Middleware ${middlewareName} was created!`);
 }
 
+function runDefaultApp() {
+    const App = require('./App/App');
+    let config;
+    try {
+        config = require('./config.js');
+    } catch (error) {
+        console.log('Config not found! Running with default');
+    }
+    const app = new App(config ? {config} : null);
+    app.listen();
+}
+
 const command = process.argv[2];
 
 if (!command) return;
-
-({
-    'make:controller': makeController,
-    'make:middleware': makeMiddleware,
-    'serve': () => {
-        const port = process.argv.find(arg => arg.match(/--port=(\d\d\d\d)/)) &&
-            process.argv.find(arg => arg.match(/--port=(\d\d\d\d)/)).split('=')[1];
-        if (port) process.env['PORT'] = port;
-        const appJsContent = fs.readFileSync(__dirname + '/app.js', 'utf8');
-        eval(appJsContent);
-    }
-}[command]());
+{
+    ({
+        'make:controller': makeController,
+        'make:middleware': makeMiddleware,
+        'serve': () => {
+            (['port', 'host'])
+                .forEach(arg => (getArg(arg) && (process.env[arg] = getArg(arg))));
+            runDefaultApp();
+        }
+    }[command]());
+}
