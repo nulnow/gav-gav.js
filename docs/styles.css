@@ -32,7 +32,6 @@ body {
     text-align: center;
     
     background: linear-gradient(to left, #3F51B5, #4e54c8);
-    background: linear-gradient(to top, #ef5350, #f44336);
 }
 .links a {
     color: #fff;
