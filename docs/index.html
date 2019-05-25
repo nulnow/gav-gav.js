@@ -4,33 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="doge.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animation.css">
     <title>gav-gav.js docs</title>
-    <style>
-        #logo {
-            width: 100px;
-            height: 100px;
-        }
-        #content {
-            text-align: center;
-        }
-        .header {
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: center;
-            align-items: center;
-            padding: 5% 10%;
-
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <header class="header">
-        <img id="logo" src="https://static.thenounproject.com/png/93779-200.png" alt="doge icon">
-        <h1 class="display-5"><b>Gav-gav.js</b> JavaScript web framework </h1>
-        <h2 class="display-6">inspired by <a href="#" class="text-danger" target="_blank"><b>Laravel</b></a></h2>
+        <div class="area"><ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></div>
+        <img id="logo" src="doge.png" alt="doge icon">
+        <h1 class="display-5"><b>Gav-gav.js</b> <small>backend JavaScript framework</small></h1>
+        <h2 class="display-6">inspired by <a href="https://laravel.com/" id="laravel" target="_blank"><b>Laravel</b></a></h2>
+        <p class="links"><a href="https://github.com/nulnow/gav-gav.js"><span class="badge badge badge-dark">Git</span><span class="badge badge-warning">Hub</span></a></p>
     </header>
     <div class="container">
         <h3 id="content">Content:</h3>
@@ -39,38 +25,98 @@
             <div class="col-md-4">
                 <h2><a href="#quick-start">Quick start</a></h2>
                 <ol>
-                    <li><a href="#">Instalation</a></li>
-                    <li><a href="#">Simple hello world app</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#simple-hello-world-app">Simple hello world app</a></li>
                 </ol>
             </div>
-            <div class="col-md-4">
-                <h2><a href="#guides">Guides</a></h2>
+            <div class="col-md-4 not-implemented">
+                <h2><a href="guides.html">Guides</a></h2>
                 <ul>
-                    <li><a href="#">Instalation</a></li>
-                    <li><a href="#">Files structure</a></li>
-                    <li><a href="#">Request lifecycle</a></li>
-                    <li><a href="#">Writing controllers</a></li>
-                    <li><a href="#">Creating routes</a></li>
-                    <li><a href="#">Sending text</a></li>
-                    <li><a href="#">Sending html</a></li>
-                    <li><a href="#">Sending json</a></li>
-                    <li><a href="#">View engine ejs</a></li>
-                    <li><a href="#">Creating api</a></li>
-                    <li><a href="#">Middlewares</a></li>
-                    <li><a href="#">Writing services</a></li>
+                    <li><a href="installtationg-guide.html">Installation</a></li>
+                    <li><a href="files-structure.html">Files structure</a></li>
+                    <li><a href="request-lifecycle.html">Request lifecycle</a></li>
+                    <li><a href="writing-controllers.html">Writing controllers</a></li>
+                    <li><a href="creating-routes.html">Creating routes</a></li>
+                    <li><a href="sending-text.html">Sending text</a></li>
+                    <li><a href="sending-html.html">Sending html</a></li>
+                    <li><a href="sending-json.html">Sending json</a></li>
+                    <li><a href="view-engine-ejs.html">View engine ejs</a></li>
+                    <li><a href="creating-api.html">Creating api</a></li>
+                    <li><a href="middlewares.html">Middlewares</a></li>
+                    <li><a href="writing-services.html">Writing services</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h2><a href="#api-reference">Api reference</a></h2>
+            <div class="col-md-4 not-implemented">
+                <h2><a href="api-reference.html">Api reference</a></h2>
                 <ul>
-                    <li><a href="#">Request</a></li>
-                    <li><a href="#">Response</a></li>
-                    <li><a href="#">Controller</a></li>
-                    <li><a href="#">App</a></li>
-                    <li><a href="#">Router</a></li>
+                    <li><a href="request.html">Request</a></li>
+                    <li><a href="response.html">Response</a></li>
+                    <li><a href="conroller.html">Controller</a></li>
+                    <li><a href="app.html">App</a></li>
+                    <li><a href="router.html">Router</a></li>
                 </ul>
             </div>
+        </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    <div id="quick-start">
+        <div class="container" style="max-width: 600px; margin-top: 30px;">
+            <h1>Quick start</h1>
+            <p>If you are new in gav-gav.js start here</p>
+            <h2 id="installation">Installation</h2>
+            <p>To install gav-gav.js you need to have <a href="https://nodejs.org/en/" target="_blank">Node js</a> and <a href="https://git-scm.com/" target="_blank">git</a> installed</p>
+            <p>If you have, follow the instructions below</p>
+<pre class="listing"><code>git clone https://github.com/nulnow/gav-gav.js
+npm install
+node gav-gav.js serve</code></pre>
+            <p>This will run your app on <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
+            <p>You can also specify port by adding flag --port=PORT</p>
+            <p>Example:</p>
+            <pre class="listing"><code>node gav-gav.js serve --port=<span class="text-danger">8080</span></code></pre>
+            <p>In browser you will see the default gav-gav.js welcome page</p>
+            <h2 id="simple-hello-world-app">Simple hello world app</h2>
+            <p>To write hellow world app you will need:</p>
+            <ol>
+                <li>Write a controller</li>
+                <li>Write a route</li>
+            </ol>
+            <p>let's start with a first one</p>
+            <p>cd in your project folder created by commands above</p>
+            <pre class="listing"><code>cd gav-gav.js</code></pre>
+            <p>Controllers in gav-gav.js can be easly generated with a built in command line tool</p>
+            <p>Just run in your project folder:</p>
+            <pre class="listing"><code>node gav-gav.js make:controller MyController</code></pre>
+            <p>It will generate <b>MyController.js</b> file in your <b>/Controllers</b> folder</p>
+            <p>In <b>MyController.js</b> class write a method index that reutrns 'Hello world!'. File should look like this:</p>
+            <pre class="listing"><code>const Controller = require('./Controller');
+class MyController extends Controller {
+    index() {
+        return 'Hello word!';
+    }
+}
+
+module.exports = MyController;</code></pre>
+            <p>Next you need to tell the app when to run whis method. Open <b>/routes/web.js</b> file and add line:</p>
+            <pre class="listing"><code>Route.get('/hello', 'MyController@index');</code></pre>
+            <p>App will run index method of MyController when user open in browser &lt;yoursite.com&gt;/hello</p>
         </div>
     </div>
+
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            This article hasn't written yet :(
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $('.not-implemented a').click(function(event) {
+            $('#toast').toast('show');
+            event.preventDefault();
+            return false;
+        });
+        $('img').on('dragstart', function(event) { event.preventDefault(); });
+    </script>
 </body>
 </html>
