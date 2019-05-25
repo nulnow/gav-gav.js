@@ -7,9 +7,6 @@ const Route = require('./Route');
 const Request = require('./Request');
 const Response = require('./Response');
 
-eval(fs.readFileSync('./App/helpers/helpers.js', 'utf8'));
-global.response = response;
-
 class App {
     /**
      * @param {object} config ({ config }) or full configuration object 
