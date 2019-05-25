@@ -40,6 +40,7 @@ module.exports = ${middlewareName};`;
 
 function runDefaultApp() {
     const App = require('./App/App');
+    (['port', 'host']).forEach(arg => (getArg(arg) && (process.env[arg] = getArg(arg))));
     let config;
     try {
         config = require('./config.js');
@@ -51,16 +52,10 @@ function runDefaultApp() {
 }
 
 const command = process.argv[2];
-
-if (!command) return;
-{
-    ({
-        'make:controller': makeController,
-        'make:middleware': makeMiddleware,
-        'serve': () => {
-            (['port', 'host'])
-                .forEach(arg => (getArg(arg) && (process.env[arg] = getArg(arg))));
-            runDefaultApp();
-        }
-    }[command]());
-}
+command ? {
+    'make:controller'   :    makeController,
+    'make:middleware'   :    makeMiddleware,
+    'serve'             :    runDefaultApp
+}[command]() : 
+    ['No command provided', 'Type', 'node gav-gav.js help', 'to get help']
+        .map(_ => console.log(_));
