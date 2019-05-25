@@ -1,4 +1,5 @@
-# gav-gav.js JavaScript web framework
+# gav-gav.js 🐶🦊 JavaScript web framework
+
 based on express.js
 ![](https://static.thenounproject.com/png/93779-200.png)
 
