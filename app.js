@@ -29,5 +29,5 @@ const app = new App({
 });
 
 app.app.listen(config.port, () => {
-    console.log(`App is listening on ${config.port} port`);
+    console.log(`App is running on http://localhost:${config.port}/`);
 });

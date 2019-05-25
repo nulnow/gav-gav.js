@@ -4,7 +4,8 @@
   "description": "express based web framework",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node gav-gav.js serve --port=8080 && echo"
   },
   "repository": {
     "type": "git",
