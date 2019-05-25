@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="doge.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="prism.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="animation.css">
     <title>gav-gav.js docs</title>
@@ -65,13 +66,13 @@
             <h2 id="installation">Installation</h2>
             <p>To install gav-gav.js you need to have <a href="https://nodejs.org/en/" target="_blank">Node js</a> and <a href="https://git-scm.com/" target="_blank">git</a> installed</p>
             <p>If you have, follow the instructions below</p>
-<pre class="listing"><code>git clone https://github.com/nulnow/gav-gav.js
+<pre><code class="language-bash">git clone https://github.com/nulnow/gav-gav.js
 npm install
 node gav-gav.js serve</code></pre>
             <p>This will run your app on <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
             <p>You can also specify port by adding flag --port=PORT</p>
             <p>Example:</p>
-            <pre class="listing"><code>node gav-gav.js serve --port=<span class="text-danger">8080</span></code></pre>
+            <pre><code class="language-bash">node gav-gav.js serve --port=<span class="text-danger">8080</span></code></pre>
             <p>In browser you will see the default gav-gav.js welcome page</p>
             <h2 id="simple-hello-world-app">Simple hello world app</h2>
             <p>To write hellow world app you will need:</p>
@@ -81,13 +82,13 @@ node gav-gav.js serve</code></pre>
             </ol>
             <p>let's start with a first one</p>
             <p>cd in your project folder created by commands above</p>
-            <pre class="listing"><code>cd gav-gav.js</code></pre>
+            <pre><code class="language-bash">cd gav-gav.js</code></pre>
             <p>Controllers in gav-gav.js can be easly generated with a built in command line tool</p>
             <p>Just run in your project folder:</p>
-            <pre class="listing"><code>node gav-gav.js make:controller MyController</code></pre>
+            <pre><code class="language-bash">node gav-gav.js make:controller MyController</code></pre>
             <p>It will generate <b>MyController.js</b> file in your <b>/Controllers</b> folder</p>
             <p>In <b>MyController.js</b> class write a method index that reutrns 'Hello world!'. File should look like this:</p>
-            <pre class="listing"><code>const Controller = require('./Controller');
+            <pre><code class="language-javascript">const Controller = require('./Controller');
 class MyController extends Controller {
     index() {
         return 'Hello word!';
@@ -96,7 +97,7 @@ class MyController extends Controller {
 
 module.exports = MyController;</code></pre>
             <p>Next you need to tell the app when to run whis method. Open <b>/routes/web.js</b> file and add line:</p>
-            <pre class="listing"><code>Route.get('/hello', 'MyController@index');</code></pre>
+            <pre><code class="language-javascript">Route.get('/hello', 'MyController@index');</code></pre>
             <p>App will run index method of MyController when user open in browser &lt;yoursite.com&gt;/hello</p>
         </div>
     </div>
@@ -110,6 +111,7 @@ module.exports = MyController;</code></pre>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="prism.js"></script>
     <script>
         $('.not-implemented a').click(function(event) {
             $('#toast').toast('show');
@@ -118,5 +120,6 @@ module.exports = MyController;</code></pre>
         });
         $('img').on('dragstart', function(event) { event.preventDefault(); });
     </script>
+    
 </body>
 </html>
