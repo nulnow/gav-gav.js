@@ -1,4 +1,3 @@
-const open = require('open');
 const helpers = require('./App/helpers/helpers');
 
 const command = process.argv[2];
@@ -8,5 +7,4 @@ command ? {
     'make:middleware'   :    helpers.makeMiddleware,
     'serve'             :    helpers.runDefaultApp
 }[command]() :
-    helpers.runDefaultApp(),
-    open('http://localhost:3000');
+    helpers.runDefaultApp();

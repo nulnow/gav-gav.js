@@ -196,7 +196,7 @@ class App {
         const expressApp = express();
 
         expressApp.set('views', './resources/views');
-        expressApp.set('view engine', 'ejs');
+        expressApp.set('view engine', 'twig');
         expressApp.use(bodyParser.json());
         expressApp.use(bodyParser.text());
         expressApp.use(bodyParser.urlencoded({ extended: false }));
