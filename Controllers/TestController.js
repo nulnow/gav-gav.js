@@ -4,6 +4,7 @@ class TestController extends require('./Controller') {
     constructor() {
         super(...arguments);
         this.Log = this.app.resolve('LogService').Log;
+        this.DB = this.app.resolve('DBService').db;
     }
 
     async index() {
@@ -13,16 +14,16 @@ class TestController extends require('./Controller') {
     }
 
     async users() {
-        return this.Ok.json(await this.app.resolve('DBService')
-            .db.collection('users')
+        const {DB} = this;
+        return this.Ok.json(await DB.collection('users')
             .find({})
             .toArray()
         );
     }
 
     async user() {
-        return this.Ok.json(await this.app.resolve('DBService')
-            .db.collection('users')
+        const {DB} = this;
+        return this.Ok.json(await DB.collection('users')
             .find(this.req.all())
             .toArray()
         );
