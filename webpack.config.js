@@ -17,9 +17,8 @@ module.exports = {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: {
-            loader: "babel-loader"
-          }
+          use: [{loader: "source-map-loader"}, {loader: "babel-loader"} ],
+          enforce: "pre"
         },
         {
           test: /\.scss$/,

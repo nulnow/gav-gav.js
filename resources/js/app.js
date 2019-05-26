@@ -1,6 +1,21 @@
 import '../scss/app.scss';
+
+import $ from 'jquery';
+import 'bootstrap';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './Components/App';
+import {Provider} from 'react-redux';
+import store from './store/index';
+import App from './components/App';
+import eventHandler from './events/handler';
+import notificationListeter from './events/listeners/notification-listener';
+import {Notification} from './events/event-types';
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+eventHandler.subscribe(notificationListeter);
+
+$('#toast').toast({delay: 2000});
+
+eventHandler.emit(new Notification('kek'));
+
+ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));

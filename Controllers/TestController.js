@@ -7,7 +7,7 @@ class TestController extends require('./Controller') {
     }
 
     index() {
-        return this.Response.view('index', {
+        return this.Ok.view('index', {
             title: 'Hello gav-gav.js!'
         });
     }
@@ -17,7 +17,7 @@ class TestController extends require('./Controller') {
     }
 
     showParams() {
-        return this.Response.all();
+        return this.Ok.all();
     }
 
 }
