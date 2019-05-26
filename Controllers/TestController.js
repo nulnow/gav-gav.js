@@ -1,10 +1,13 @@
-module.exports =
+let DB;
+let UserRepository;
 
+module.exports = 
 class TestController extends require('./Controller') {
     constructor() {
         super(...arguments);
-        this.Log = this.app.resolve('LogService').Log;
-        this.DB = this.app.resolve('DBService').db;
+        const resolve = this.app.resolve.bind(this.app);
+        !DB && (DB = resolve('DBService').db);
+        !UserRepository && (UserRepository = new (resolve('UserRepositoryFabric').UserRepository)(DB))
     }
 
     async index() {
@@ -14,19 +17,10 @@ class TestController extends require('./Controller') {
     }
 
     async users() {
-        const {DB} = this;
-        return this.Ok.json(await DB.collection('users')
-            .find({})
-            .toArray()
-        );
+        return this.Ok.json(await UserRepository.getUsers());
     }
 
     async user() {
-        const {DB} = this;
-        return this.Ok.json(await DB.collection('users')
-            .find(this.req.all())
-            .toArray()
-        );
+        return this.Ok.json(await UserRepository.getUser(this.req.all()));
     }
-
 }
