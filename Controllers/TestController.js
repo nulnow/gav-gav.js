@@ -1,8 +1,11 @@
+const Controller = require('./Controller');
+const { Ok, Created } = Controller;
+
 let DB;
-let UserRepository;
+let UserRepository; 
 
 module.exports = 
-class TestController extends require('./Controller') {
+class TestController extends Controller {
     constructor() {
         super(...arguments);
         const resolve = this.app.resolve.bind(this.app);
@@ -11,27 +14,29 @@ class TestController extends require('./Controller') {
     }
 
     async index() {
-        return this.Ok.view('index', {
+        return Ok.view('index', {
             title: 'Hello gav-gav.js!'
         });
     }
 
     async users() {
-        return this.Ok.json(await UserRepository.getUsers());
+        return Ok.json(await UserRepository.getUsers());
     }
 
     async user(request) {
-        return this.Ok.json(await UserRepository.getUser(request.all()));
+        return Ok.json(await UserRepository.getUser(request.all()));
     }
 
     async addUser(request) {
+
         const name = request.input('name');
 
         if (!name) {
             return this.Response.code(400).text('Name is required');
         }
 
-        return this.Created.json(await UserRepository.addUser(name));
+        return Created.json(await UserRepository.addUser(name));
     }
+    
 
 }

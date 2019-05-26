@@ -10,21 +10,21 @@ class Controller {
         this.app = app;
     }
 
-    get Response() {
+    static get Response() {
         return new Response;
     }
-    get Ok() {
-        return this.Response.code(200);
+    static get Ok() {
+        return Controller.Response.code(200);
     }
-    get Created() {
-        return this.Response.code(201);
+    static get Created() {
+        return Controller.Response.code(201);
     }
-    get Unauthorized() {
-        return this.Response.code(401);
+    static get Unauthorized() {
+        return Controller.Response.code(401);
     }
 
-    get ServerError() {
-        return this.Response.code(500).text('ServerError');
+    static get ServerError() {
+        return Controller.Response.code(500).text('ServerError');
     }
 
 }
