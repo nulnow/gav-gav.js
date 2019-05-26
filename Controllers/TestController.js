@@ -20,7 +20,18 @@ class TestController extends require('./Controller') {
         return this.Ok.json(await UserRepository.getUsers());
     }
 
-    async user() {
-        return this.Ok.json(await UserRepository.getUser(this.req.all()));
+    async user(request) {
+        return this.Ok.json(await UserRepository.getUser(request.all()));
     }
+
+    async addUser(request) {
+        const name = request.input('name');
+
+        if (!name) {
+            return this.Response.code(400).text('Name is required');
+        }
+
+        return this.Created.json(await UserRepository.addUser(name));
+    }
+
 }

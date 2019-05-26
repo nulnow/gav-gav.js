@@ -119,7 +119,7 @@ class App {
     
                     // Get a response from controller
                     try {
-                        let response = await new controller(this, request)[controllerAction]();
+                        let response = await new controller(this, request)[controllerAction](request);
                         if (!(response instanceof Response)) response = Response.from(response);
                         return this.sendResponse(response, res)
                     } catch (error) {
