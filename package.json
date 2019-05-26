@@ -24,13 +24,29 @@
   },
   "homepage": "https://github.com/nulnow/gav-gav.js#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
+    "css-loader": "^2.1.1",
     "ejs": "^2.6.1",
     "express": "^4.17.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "mini-css-extract-plugin": "^0.6.0",
     "mongodb": "^3.2.6",
     "nodemon": "^1.19.1",
     "open": "^6.3.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "css-raw-loader": "^0.1.2",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
