@@ -2,7 +2,7 @@ const Controller = require('./Controller');
 const { Ok, Created } = Controller;
 
 let DB;
-let UserRepository; 
+let UserRepository;
 
 module.exports = 
 class TestController extends Controller {
