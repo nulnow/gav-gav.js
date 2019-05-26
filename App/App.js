@@ -200,7 +200,7 @@ class App {
         expressApp.use(bodyParser.json());
         expressApp.use(bodyParser.text());
         expressApp.use(bodyParser.urlencoded({ extended: false }));
-        expressApp.use(express.static(__dirname + '/public'));
+        expressApp.use(express.static('./public'));
 
         return new App({
             app: expressApp,

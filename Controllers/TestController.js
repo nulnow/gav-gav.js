@@ -7,10 +7,7 @@ class TestController extends require('./Controller') {
     }
 
     index() {
-        return this.Response.view('index', {
-            title: 'Hello world! gav-gav.js',
-            request: this.req
-        });
+        return this.Response.view('index');
     }
 
     test() {

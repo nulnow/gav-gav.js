@@ -49,3 +49,8 @@ module.exports.runDefaultApp = function() {
     const app = new App(config ? {config} : null);
     app.listen();
 }
+
+module.exports.runDefaultAppAndWatch = function() {
+    const { spawn } = require('child_process');
+    spawn('nodemon gav-gav.js');
+}
