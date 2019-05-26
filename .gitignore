@@ -1,2 +1,4 @@
 /node_modules
 logs.txt
+/public/js/bundle/*
+/public/css/bundle/*
