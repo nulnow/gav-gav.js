@@ -6,18 +6,26 @@ class TestController extends require('./Controller') {
         this.Log = this.app.resolve('LogService').Log;
     }
 
-    index() {
+    async index() {
         return this.Ok.view('index', {
             title: 'Hello gav-gav.js!'
         });
     }
 
-    test() {
-        return 333;
+    async users() {
+        return this.Ok.json(await this.app.resolve('DBService')
+            .db.collection('users')
+            .find({})
+            .toArray()
+        );
     }
 
-    showParams() {
-        return this.Ok.all();
+    async user() {
+        return this.Ok.json(await this.app.resolve('DBService')
+            .db.collection('users')
+            .find(this.req.all())
+            .toArray()
+        );
     }
 
 }

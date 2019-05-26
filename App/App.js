@@ -23,12 +23,12 @@ class App {
             get: {},
             post: {}
         };
-        this.services = services;
-        this.middlewares = middlewares;
+        
         if (config) {
             this.setUpConfig(config);
         }
-        eval(require('./helpers/helpers'));
+        this.services = services.map(service => (new service(this)));
+        this.middlewares = middlewares;
         this.bindControllersToRoutes(routes, controllers);
         this.setUp404Page();
     }
@@ -46,6 +46,8 @@ class App {
         this.appKey = config.appKey || null;
         this.commonMiddlewares = config.commonMiddlewares || [];
         this.dburl = config.dburl || '';
+        this.dbName = config.dbName;
+        this.config = config;
     }
     runMiddlewares(middlewares, request) {
         return new Promise(async (resolve, reject) => {
@@ -72,7 +74,7 @@ class App {
 
     resolve(service) {
         return this.services.find(
-            s => s.name === service
+            s => s.constructor.name === service
         );
     }
 
@@ -222,7 +224,8 @@ class App {
             appKey: 'secret',
             port: process.env.PORT || 3000,
             host: process.env.HOST || 'localhost',
-            dburl: 'mongodb://localhost:27017/hello'
+            dbUrl: 'mongodb://localhost:27017/',
+            dbName: 'gav'
         }
     }
 }

@@ -1,7 +1,10 @@
 const fs = require('fs');
 
 class LogService {
-    static Log(data) {
+    constructor(app) {
+
+    }
+    Log(data) {
         fs.appendFile('logs.txt', JSON.stringify(data) + '\n', () => {});
     }
 }

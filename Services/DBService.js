@@ -2,21 +2,17 @@ const mongodb = require('mongodb');
 const { MongoClient } = mongodb;
 
 module.exports = class DBService {
-    constructor(url) {
-        this.url = url;
-        this.MongoClient = MongoClient;
-    }
-    getClient() {
-        return new Promise((resolve, reject) => {
-            if (this.client) resolve(this.client);
-            this.MongoClient.connect(this.url, { useNewUrlParser: true }, (err, client) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                if (!this.client) this.client = client;
-                resolve(client);
-            })
+    constructor(app) {
+        this.url = app.config.dbUrl;
+        this.dbName = app.dbName;
+        this.client = new MongoClient(this.url, { useNewUrlParser: true });
+        console.log(this.url);
+        this.client.connect(err => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            this.db = this.client.db(this.dbName);
         });
     }
 }
