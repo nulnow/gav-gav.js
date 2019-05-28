@@ -228,7 +228,7 @@ class App {
 
     static get DEFAULT_CONFIG () {
         return {
-            commonMiddlewares: ['AuthMiddleware'],
+            commonMiddlewares: ['AuthMiddleware', 'LangMiddleware'],
             appKey: 'secret',
             port: process.env.PORT || 3000,
             host: process.env.HOST || 'localhost',

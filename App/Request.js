@@ -1,5 +1,6 @@
 class Request {
     constructor(expressRequest) {
+        this.lang = 'en';
         this.body = expressRequest.body || {};
         this.query = expressRequest.query || {};
         this.method = expressRequest.method || 'get';

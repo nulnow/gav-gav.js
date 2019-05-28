@@ -3,6 +3,7 @@ const { Ok, Response } = Controller;
 
 let DB;
 let Cache;
+let Lang;
 
 class TestController777 extends Controller {
 
@@ -10,6 +11,7 @@ class TestController777 extends Controller {
         super(...arguments);
         !DB && (DB = this.app.resolve('DBService').db);
         !Cache && (Cache = this.app.resolve('CacheService'));
+        !Lang && (Lang = this.app.resolve('LangService'));
     }
 
     me(request) {
@@ -73,6 +75,7 @@ class TestController777 extends Controller {
     async putToCache(request) {
         const key = request.input('key');
         const value = request.input('value');
+
         if (!key) return Response.code(404).text('Key is required');
         if (!value) return Response.code(404).text('Value is required');
 
