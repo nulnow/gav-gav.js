@@ -1,3 +1,4 @@
+const fs = require('fs');
 const getArg = require('../utils/command-line-args-parser');
 
 module.exports.makeController = function (name) {
@@ -13,7 +14,7 @@ class ${controllerName} extends Controller {
 }
 
 module.exports = ${controllerName};`;
-    fs.writeFileSync(__dirname + `/Controllers/${controllerName}.js`, controllerTemplate);
+    fs.writeFileSync(`./Controllers/${controllerName}.js`, controllerTemplate);
     console.log(`Controller ${controllerName} was created!`);
 }
 
@@ -33,7 +34,7 @@ module.exports.makeMiddleware = function (name) {
 }
 
 module.exports = ${middlewareName};`;
-    fs.writeFileSync(__dirname + `/Middlewares/${middlewareName}.js`, template);
+    fs.writeFileSync(`./Middlewares/${middlewareName}.js`, template);
     console.log(`Middleware ${middlewareName} was created!`);
 }
 

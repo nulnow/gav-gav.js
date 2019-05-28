@@ -38,5 +38,4 @@ class TestController extends Controller {
         return Created.json(await UserRepository.addUser(name));
     }
     
-
 }

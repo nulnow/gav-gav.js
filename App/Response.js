@@ -3,6 +3,8 @@ class Response {
         this.contentType = 'html';
         this.statusCode = 200;
         this.data = '';
+        this.cookies = {};
+        this.redirect = null;
     }
 
     /**
@@ -65,11 +67,47 @@ class Response {
         return this;
     }
 
+    setCookies(nameOrObject, valueOrOptions) {
+        if (typeof valueOrOptions === 'string') {
+            this.cookie[nameOrObject] = valueOrOptions;
+        } else if (typeof nameOrObject === 'object') {
+            console.log(nameOrObject);
+            for (const cookieName in nameOrObject) {
+                if (!nameOrObject.hasOwnProperty(cookieName)) continue;
+                let cookieValue = nameOrObject[cookieName];
+                this.cookies[cookieName] = cookieValue;
+            }
+        }
+        return this;
+    }
+
+    redirectTo(path) {
+        this.redirect = path;
+        return this;
+    }
+
     /**
      * Sends response to the client
      * @param expressResponse express response object 
      */
     send(expressResponse) {
+
+        // Write cookies if exist
+        if (Object.keys(this.cookies).length) {
+            for (const cookieName in this.cookies) {
+                if (!this.cookies.hasOwnProperty(cookieName)) continue;
+                const cookieValue = this.cookies[cookieName];
+                expressResponse.cookie(cookieName, cookieValue, {
+                    maxAge: Number.MAX_SAFE_INTEGER,
+                    path: '/'
+                });
+            }
+        }
+
+        if (this.redirect) {
+            return expressResponse.redirect(this.redirect);
+        }
+
         if (this.contentType !== 'view') {
             expressResponse.type(this.contentType || 'text')
             expressResponse.status(this.statusCode || 200);

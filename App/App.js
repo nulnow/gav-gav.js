@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const fs = require('fs');
 const Route = require('./Route');
@@ -16,6 +17,15 @@ class App {
         if (Object.keys(paramObject).length === 1) return App.GetDefaultSetup(paramObject);
         
         const { app, services, routes, controllers, middlewares, config } = paramObject;
+
+        app.set('views', './resources/views');
+        app.set('view engine', 'twig');
+        app.use(bodyParser.json());
+        app.use(bodyParser.text());
+        app.use(bodyParser.urlencoded({ extended: false }));
+        app.use(cookieParser());
+        app.use(express.static('./public'));
+
         this.port = config.port || process.env.PORT || 3000;
         this.host = config.host || process.env.HOST || 'localhost';
         this.app = app || null;
@@ -52,7 +62,7 @@ class App {
     runMiddlewares(middlewares, request) {
         return new Promise(async (resolve, reject) => {
             if (!middlewares) return resolve();
-            for (let middleware of middlewares) {
+            for (const middleware of middlewares) {
                 let response
                 try {
                     response = await middleware.run(this, request);
@@ -108,11 +118,16 @@ class App {
     
                     // Go trough middlewares
                     try {
-                        const middlewareResponse = await this.runMiddlewares(
+                        let middlewareResponse = await this.runMiddlewares(
                             [...(commonMiddlewares || []), ...(routeMiddlewares || [])],
                             request
                         );
-                        if (middlewareResponse) return this.sendResponse(middlewareResponse, res);
+                        if (middlewareResponse) {
+                            if (!(middlewareResponse instanceof Response)) {
+                                response = Response.from(middlewareResponse);
+                            }
+                            return this.sendResponse(middlewareResponse, res);
+                        }
                     } catch(error) {
                         return this.sendResponse(new Response().code(500).text(error), res);
                     }
@@ -196,13 +211,6 @@ class App {
         const services = App.LoadServices();
 
         const expressApp = express();
-
-        expressApp.set('views', './resources/views');
-        expressApp.set('view engine', 'twig');
-        expressApp.use(bodyParser.json());
-        expressApp.use(bodyParser.text());
-        expressApp.use(bodyParser.urlencoded({ extended: false }));
-        expressApp.use(express.static('./public'));
 
         return new App({
             app: expressApp,
