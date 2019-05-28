@@ -5,11 +5,13 @@ class Hash {
     
     constructor(app) {
         this.app = app;
-        try {
-            this.Log = app.resolve('LogService').Log;
-        } catch (error) {
-            console.log('Can not resolve LogService');
-        }
+        setTimeout(() => {
+            try {
+                this.Log = app.resolve('LogService').Log;
+            } catch (error) {
+                console.log('Can not resolve LogService');
+            }
+        }, 4);
     }
     
     make(text) {

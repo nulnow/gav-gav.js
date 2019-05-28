@@ -8,3 +8,6 @@ Route.get('/showCookies', 'TestController777@showCookies');
 Route.get('/register', 'TestController777@register');
 Route.get('/login', 'TestController777@login');
 Route.get('/me', 'TestController777@me');
+
+Route.get('/cacheGet', 'TestController777@getFromCache');
+Route.get('/putToCache', 'TestController777@putToCache');

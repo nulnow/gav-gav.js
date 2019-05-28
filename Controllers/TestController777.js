@@ -2,12 +2,14 @@ const Controller = require('./Controller');
 const { Ok, Response } = Controller;
 
 let DB;
+let Cache;
 
 class TestController777 extends Controller {
 
     constructor() {
         super(...arguments);
         !DB && (DB = this.app.resolve('DBService').db);
+        !Cache && (Cache = this.app.resolve('CacheService'));
     }
 
     me(request) {
@@ -57,6 +59,26 @@ class TestController777 extends Controller {
 
     showCookies(request) {
         return request.cookies;
+    }
+
+    async getFromCache(request) {
+        const key = request.input('key');
+        if (!key) return Response.code(404).text('Key is required');
+
+        const value = await Cache.get(key);
+
+        return Ok.code(value ? 200 : 404).json(JSON.parse(value));
+    }
+
+    async putToCache(request) {
+        const key = request.input('key');
+        const value = request.input('value');
+        if (!key) return Response.code(404).text('Key is required');
+        if (!value) return Response.code(404).text('Value is required');
+
+        await Cache.put(key, value);
+
+        return Ok.text('Putted');
     }
 
 }
