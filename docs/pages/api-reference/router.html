@@ -11,13 +11,36 @@
 </head>
 <body>
     <div class="container" style="max-width: 600px; margin-top: 30px;">
+        <p><a href="../../index.html">Table of content</a></p>
         <h1>Router class</h1>
         <p>Router is an abstraction to easly generate a list of routes</p>
         <p>All it does - it takes this:</p>
-
-        <p>And converts it in this:</p>
-
+<pre><code class="language-javascript">Route.get('/', 'TestController@index');
+Route.get('/users', 'TestController@users');</code></pre>
+        <p>And converts it into this:</p>
+<pre><code class="language-javascript">[
+    {
+        methods: ['get'],
+        path: '/',
+        middlewares: [],
+        action: 'TestController@index'
+    },
+    {
+        methods: ['get'],
+        path: '/users',
+        middlewares: [],
+        action: 'TestController@users'
+    }
+]</code></pre>
         <h2>How it works:</h2>
+        <p>The code below should give you the basic understanding of this magic</p>
+<pre><code class="language-javascript">const router = new Route;
+const fileContent = fs.readFileSync('./routes/web.js', 'utf8');
+function generateRoutes(Router) {
+    eval(fileContent);
+    return Route.flush();
+}
+const routes = generateRoutes(router);</code></pre>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

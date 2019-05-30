@@ -12,12 +12,24 @@ class TestController777 extends Controller {
 
     constructor() {
         super(...arguments);
+        
+        this.Cache = this.app.resolve('CacheService');
+
+
         !DB && (DB = this.app.resolve('DBService').db);
         !Cache && (Cache = this.app.resolve('CacheService'));
         !Lang && (Lang = this.app.resolve('LangService'));
         !User && (User = this.app.resolve('Models').User);
         !Models && (Models = this.app.resolve('Models'));
         !Validator && (Validator = this.app.resolve('Validator'));
+    }
+
+    async users() {
+        const usersFromCache = await this.Cache.get('users');
+        if (usersFromCache) return usersFromCache;
+        const usersFromDB = // db getting logic
+        this.Cache.put('users', usersFromDB);
+        return usersFromDB;
     }
 
     async testUserModel(request) {

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../prism.css">
+    <title>Controller</title>
+</head>
+<body>
+    <div class="container" style="max-width: 600px; margin-top: 30px;">
+        <p><a href="../../index.html">Table of content</a></p>
+        <h1>Controller</h1>
+        <p>Controllers in gav-gav.js are like in other similar framewors</p>
+        <p>App creates controller instance on each request</p>
+<pre><code class="language-javascript">let response = await new controller(app, request)[controllerAction](request);</code></pre>
+        <p>Controller constructor gets the app as a parameter</p>
+        <p>You can ask the app to give you a service you want</p>
+        <pre><code class="language-javascript">
+
+class TestController777 extends Controller {
+
+    constructor() {
+        super(...arguments);
+        
+        this.Cache = this.app.resolve('CacheService');
+
+        </code></pre>
+        <p>And you can use in controller methods:</p>
+<pre><code class="language-javascript">async users() {
+    const usersFromCache = await this.Cache.get('users');
+    if (usersFromCache) return usersFromCache;
+    const usersFromDB = // db getting logic
+    this.Cache.put('users', usersFromDB);
+    return usersFromDB;
+}</code></pre>
+        <h2>Responses</h2>
+        <p>Controller class has a helpers to create a Response object</p>
+<pre><code class="language-javascript">user() {
+    const user = {
+        name: 'Jhon',
+        age: 21
+    }
+    return this.Response.status(200).json(user);
+
+    // Or if user wasn't found
+    return this.Response.status(404).text('not found');
+}</code></pre>
+        <p>More about responses you can read in <a href="request.html">requests article</a></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="../../prism.js"></script>
+</body>
+</html>
