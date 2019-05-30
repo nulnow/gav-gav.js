@@ -4,6 +4,9 @@ const { Ok, Response } = Controller;
 let DB;
 let Cache;
 let Lang;
+let User;
+let Models;
+let Validator;
 
 class TestController777 extends Controller {
 
@@ -12,6 +15,63 @@ class TestController777 extends Controller {
         !DB && (DB = this.app.resolve('DBService').db);
         !Cache && (Cache = this.app.resolve('CacheService'));
         !Lang && (Lang = this.app.resolve('LangService'));
+        !User && (User = this.app.resolve('Models').User);
+        !Models && (Models = this.app.resolve('Models'));
+        !Validator && (Validator = this.app.resolve('Validator'));
+    }
+
+    async testUserModel(request) {
+        const {name, email} = request.all();
+        const user = new User({name, email})
+        try {
+            await user.save();
+        } catch (error) {
+            return error;
+        }
+        return user.toJSON();
+    }
+
+    async addCheat(request) {
+        const {title, body} = request.all();
+        const cheat = new Models.Cheat({
+            title, body
+        });
+
+        try {
+            await cheat.save();
+        } catch (error) {
+            return error;
+        }
+
+        return 'k';
+    }
+
+    async scr() {
+        return await Models.Subscription.find({})
+            .populate('user')
+            .populate('cheat')
+            .exec();
+    }
+ 
+    async userBy(request) {
+        const { name } = request.all();
+
+        const user = await User.findOne({name});
+        if (user) {
+            const cheat = await Models.Cheat.findOne({title: 'cheatSuper'});
+            const subscription = new Models.Subscription({
+                cheat: cheat._id,
+                user: user._id
+            });
+
+            try {
+                subscription.save();
+            } catch (error) {
+                return error;
+            }
+        }
+
+        return user ? user.toJSON() : 'no user';
     }
 
     me(request) {
@@ -19,6 +79,26 @@ class TestController777 extends Controller {
     }
 
     async register(request) {
+
+        const errors = Validator.validate(request.all(), {
+            name: {
+                type: String,
+                required: true,
+                length: { min: 10, max: 32 },
+                message: 'name'
+            },
+            password: {
+                type: String,
+                required: true,
+                message: {
+                    type: 'Title must be a string.',
+                    required: 'password'
+                    }
+            }
+        });
+        if (errors.length) {
+            // error handling logic
+        }
 
         const name = request.input('name');
 

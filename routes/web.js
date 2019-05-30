@@ -11,3 +11,12 @@ Route.get('/me', 'TestController777@me');
 
 Route.get('/cacheGet', 'TestController777@getFromCache');
 Route.get('/putToCache', 'TestController777@putToCache');
+
+Route.get('/testUserModel', 'TestController777@testUserModel');
+Route.get('/userBy', 'TestController777@userBy');
+
+Route.get('/addCheat', 'TestController777@addCheat');
+
+Route.get('C:/Program Files/Git/scr', 'TestController777@scr');
+
+Route.get('/scr', 'TestController777@scr');
