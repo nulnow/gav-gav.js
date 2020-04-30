@@ -52,7 +52,7 @@
     "cookie-parser": "^1.4.4",
     "css-raw-loader": "^0.1.2",
     "http-proxy": "^1.17.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mongoose": "^5.5.11",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.12.0",
