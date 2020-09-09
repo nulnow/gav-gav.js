@@ -51,7 +51,7 @@
     "bcrypt": "^3.0.6",
     "cookie-parser": "^1.4.4",
     "css-raw-loader": "^0.1.2",
-    "http-proxy": "^1.17.0",
+    "http-proxy": "^1.18.1",
     "jquery": "^3.4.1",
     "mongoose": "^5.5.11",
     "node-fetch": "^2.6.0",
